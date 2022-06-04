@@ -1,5 +1,5 @@
-import React from "react";
-import styled from "@emotion/styled/macro";
+import styled from "@emotion/styled";
+import React, { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
 const Base = styled.header`
@@ -35,7 +35,7 @@ const Menu = styled.li`
   align-items: center;
   height: 62px;
   flex-shrink: 0;
-  &:not(:first-of-type) {
+  &:not(:first-child) {
     margin: 0 0 0 24px;
   }
 `;
@@ -168,10 +168,17 @@ const SignUp = styled.button`
   margin: 15px 0;
 `;
 
-export type HeaderProps = {};
+interface Props {}
 
-function Header({}: HeaderProps) {
-  const handleKeyword = () => {};
+const Header: React.FC<Props> = () => {
+  const searchRef = useRef<HTMLDivElement>(null);
+  const pathname = window.location.pathname;
+
+  const [searchKeyword, setSearchKeyword] = useState<string>("");
+
+  const handleKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setSearchKeyword(e.target.value);
+  };
 
   return (
     <Base>
@@ -181,24 +188,24 @@ function Header({}: HeaderProps) {
             <Menu>
               <Link href="/">
                 <TextLogo>
-                  <span className="primary">WATCHA</span>
+                  <span className="primary">WATCHOUT</span>
                   <span>PEDIA</span>
                 </TextLogo>
               </Link>
             </Menu>
             <Menu>
               <Link href="/">
-                <MenuButton>영화</MenuButton>
+                <MenuButton active={pathname === "/"}>영화</MenuButton>
               </Link>
             </Menu>
             <Menu>
               <Link href="/tv">
-                <MenuButton>TV 프로그램</MenuButton>
+                <MenuButton active={pathname === "/tv"}>TV 프로그램</MenuButton>
               </Link>
             </Menu>
             <SearchMenu>
               <SearchContainer>
-                <SearchFormWrapper>
+                <SearchFormWrapper ref={searchRef}>
                   <SearchForm>
                     <SearchLabel>
                       <AiOutlineSearch />
@@ -225,6 +232,6 @@ function Header({}: HeaderProps) {
       </Navigation>
     </Base>
   );
-}
+};
 
 export default Header;

@@ -2,7 +2,6 @@ import React from "react";
 import styled from "@emotion/styled";
 
 const Base = styled.footer`
-  margin-top: 62px;
   display: block;
   box-sizing: border-box;
   width: 100%;
@@ -74,9 +73,7 @@ const TermsAndPolicyItem = styled.li`
 
 const Right = styled.div``;
 
-export type FooterProps = {};
-
-function Footer({}: FooterProps) {
+const Footer: React.FC = () => {
   return (
     <Base>
       <Section>
@@ -102,6 +99,6 @@ function Footer({}: FooterProps) {
       </Section>
     </Base>
   );
-}
+};
 
 export default Footer;
