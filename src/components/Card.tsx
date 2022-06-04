@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from '@emotion/styled';
-import { Link } from 'react-router-dom';
-import { AiFillStar } from 'react-icons/ai';
+import React from "react";
+import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
+import { AiFillStar } from "react-icons/ai";
 
 interface Props {
   linkUrl: string;
@@ -70,7 +70,13 @@ const Average = styled.div`
   align-items: center;
 `;
 
-const Card: React.FC<Props> = ({ linkUrl, title, posterPath, voteAverage, year }) => (
+const Card: React.FC<Props> = ({
+  linkUrl,
+  title,
+  posterPath,
+  voteAverage,
+  year,
+}) => (
   <StyledLink to={linkUrl}>
     <Base>
       <ImageWrapper>
@@ -80,19 +86,16 @@ const Card: React.FC<Props> = ({ linkUrl, title, posterPath, voteAverage, year }
         <Title>{title}</Title>
         <Keyword>{year}</Keyword>
         <Average>
+          <span>평균</span>
           <span>
-            평균
+            &nbsp;
+            <AiFillStar />
           </span>
-          <span>
-            &nbsp;<AiFillStar />
-          </span>
-          <span>
-            {voteAverage}
-          </span>
+          <span>{voteAverage}</span>
         </Average>
       </Info>
     </Base>
   </StyledLink>
-)
+);
 
 export default Card;

@@ -2,6 +2,9 @@ import styled from "@emotion/styled";
 import React, { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
+import useMovieSearch from "~/features/movie/useMovieSearch";
+import useOnClickOutside from "~/hooks/useClickOutside";
+
 const Base = styled.header`
   width: 100%;
   margin: 0 auto;
@@ -180,6 +183,10 @@ const Header: React.FC<Props> = () => {
     setSearchKeyword(e.target.value);
   };
 
+  useOnClickOutside(searchRef, () => setSearchKeyword(""));
+
+  const { data: searchResult } = useMovieSearch(searchKeyword);
+
   return (
     <Base>
       <Navigation>
@@ -218,7 +225,18 @@ const Header: React.FC<Props> = () => {
                 </SearchFormWrapper>
               </SearchContainer>
               <SearchResultWrapper>
-                <SearchResultList></SearchResultList>
+                <SearchResultList>
+                  {searchResult?.results.map((searchResultItem) => (
+                    <Link
+                      href={`/movie/${searchResultItem.id}`}
+                      key={searchResultItem.id}
+                    >
+                      <SearchResultListItem>
+                        {searchResultItem.title}
+                      </SearchResultListItem>
+                    </Link>
+                  ))}
+                </SearchResultList>
               </SearchResultWrapper>
             </SearchMenu>
             <Menu>
