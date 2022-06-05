@@ -1,9 +1,12 @@
-import styled from "@emotion/styled";
+import styled from "@emotion/styled/macro";
 import React, { useRef, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
+import { useRecoilState } from "recoil";
+
+import { loginModalOpenState, signupModalOpenState } from "~/features/app/atom";
 
 import useMovieSearch from "~/features/movie/useMovieSearch";
-import useOnClickOutside from "~/hooks/useClickOutside";
+import useClickOutside from "~/hooks/useClickOutside";
 
 const Base = styled.header`
   width: 100%;
@@ -179,11 +182,24 @@ const Header: React.FC<Props> = () => {
 
   const [searchKeyword, setSearchKeyword] = useState<string>("");
 
+  const [isLoginModalOpen, setIsLoginModalOpen] =
+    useRecoilState(loginModalOpenState);
+  const [isSignupModalOpen, setIsSignupModalOpen] =
+    useRecoilState(signupModalOpenState);
+
+  const handleLoginModal = (): void => {
+    !isLoginModalOpen && setIsLoginModalOpen(true);
+  };
+
+  const handleSignup = (): void => {
+    !isSignupModalOpen && setIsSignupModalOpen(true);
+  };
+
   const handleKeyword = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setSearchKeyword(e.target.value);
   };
 
-  useOnClickOutside(searchRef, () => setSearchKeyword(""));
+  useClickOutside(searchRef, () => setSearchKeyword(""));
 
   const { data: searchResult } = useMovieSearch(searchKeyword);
 
@@ -240,10 +256,10 @@ const Header: React.FC<Props> = () => {
               </SearchResultWrapper>
             </SearchMenu>
             <Menu>
-              <SignIn>로그인</SignIn>
+              <SignIn onClick={handleLoginModal}>로그인</SignIn>
             </Menu>
             <Menu>
-              <SignUp>회원가입</SignUp>
+              <SignUp onClick={handleSignup}>회원가입</SignUp>
             </Menu>
           </MenuList>
         </MenuListWrapper>

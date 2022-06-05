@@ -10,6 +10,8 @@ import { Rating } from "@mui/material";
 import Header from "~/components/Header";
 import Footer from "~/components/Footer";
 import useMovieDetail from "~/features/movie/useMovieDetail";
+import DefaultInfo from "~/features/movie/detail/DefaultInfo";
+import Similar from "~/features/movie/detail/Similar";
 
 const Base = styled.div`
   position: relative;
@@ -310,7 +312,16 @@ function MovieDetail() {
           {/* 상세 정보 */}
 
           <BottomInfo>
-            <ContentSectionContainer></ContentSectionContainer>
+            <ContentSectionContainer>
+              <DefaultInfo
+                title={data.title}
+                year={year}
+                genres={genres}
+                runtime={data.runtime}
+                overview={data.overview}
+              />
+              <Similar id={id} />
+            </ContentSectionContainer>
           </BottomInfo>
         </>
       )}
